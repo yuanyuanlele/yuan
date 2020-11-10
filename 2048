@@ -1,0 +1,398 @@
+#include<stdio.h>
+#include<conio.h>
+#include <windows.h>
+#include<graphics.h>
+#define MAX_GRID 4//每行格子数
+#define GRID_WIDTH 100//格子宽度
+#define INTERVAL 15//间隔
+void o1();
+void o2();
+void o3();
+void start();
+void lead()
+{
+	initgraph(MAX_GRID*GRID_WIDTH + 5 * INTERVAL, MAX_GRID*GRID_WIDTH + 5 * INTERVAL);//背景大小475,475
+	setbkcolor(RGB(187, 173, 160));//背景颜色
+	cleardevice();
+	o1();
+}
+int WIDTH = MAX_GRID*GRID_WIDTH + 5 * INTERVAL;
+int HEIGHT = MAX_GRID*GRID_WIDTH + 5 * INTERVAL;
+void o1()
+{
+	cleardevice();//清屏
+
+	setfont(47, 0, "方正行黑简体");
+	RECT r1 = { 0, 0, WIDTH, HEIGHT / 3 };
+	drawtext("欢迎来到2048的世界", &r1, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+	setfont(30, 0, "微软雅黑");
+	RECT r2 = { WIDTH / 2 - 45, HEIGHT / 3, WIDTH / 2 + 80, HEIGHT / 3 + 30 };
+	drawtext("q,开始游戏", &r2, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	RECT r3 = { WIDTH / 2 - 45, HEIGHT / 3 + 30, WIDTH / 2 + 80, HEIGHT / 3 + 60 };
+	drawtext("w,游戏介绍", &r3, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	RECT r4 = { WIDTH / 2 - 45, HEIGHT / 3 + 60, WIDTH / 2 + 80, HEIGHT / 3 + 90 };
+	drawtext("e,游戏说明", &r4, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	RECT r5 = { WIDTH / 2 - 45, HEIGHT / 3 + 90, WIDTH / 2 + 80, HEIGHT / 3 + 120 };
+	drawtext("r,退出游戏", &r5, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+	setfillcolor(RGB(244, 186, 1));//填充颜色
+	solidroundrect(216, 478, 484, 746, 50, 50);
+	setfont(145, 0, "Microsoft Yahei UI Bold");//字体
+	settextcolor(RGB(254, 253, 249));
+	setbkcolor(RGB(244, 186, 1));//背景色
+	outtextxy(216, 535, "2048");//输出字符串2048
+
+	setbkcolor(RGB(251, 248, 241));
+	settextcolor(RGB(150, 126, 104));//字体颜色
+	setfont(30, 0, "Microsoft Yahei Ul Boid");
+	char key = _getch();
+	switch (key)
+	{
+	case'q':
+	case'Q':
+		start();
+		break;
+	case'w':
+	case'W':
+		o2();
+		break;
+	case'e':
+	case'E':
+		o3();
+		break;
+	case'r':
+	case'R':
+		exit(1);
+		break;
+	}
+}
+void o2()
+{
+	cleardevice();//清屏
+	setfont(15, 0, "方正行黑简体");
+	RECT R1 = { 0,0, 225,15 };
+	drawtext("游戏介绍：每次可以选择上下左右", &R1, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	RECT R2 = { 0, 15, 225, 30 };
+	drawtext("其中一个方向去滑动，每滑动一次", &R2, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	RECT R3 = { 0, 30, 225, 45 };
+	drawtext("所有数字方块都会往滑动方向靠拢", &R3, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	RECT R4 = { 0, 45, 225, 60 };
+	drawtext("系统也会在空白地方随机出现一个", &R4, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	RECT R5 = { 0, 60, 225, 75 };
+	drawtext("数字方块，相同数字会在靠拢碰撞", &R5, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	RECT R6 = { 0, 75, 225, 90 };
+	drawtext("时相加。不断的叠加，当最终拼凑", &R6, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	RECT R7 = { 0, 90, 225, 105 };
+	drawtext("出2048这个数字就算成功........", &R7, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	RECT R8 = { 90, 90, 250, 250 };
+	drawtext("按p返回", &R8, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+	char key = _getch();
+	switch (key)
+	{
+	case 'p':
+	case 'P':
+			o1();
+			break;
+	}
+}
+void o3()
+{
+	cleardevice();//清屏
+	setfont(15, 0, "方正行黑简体");
+	RECT S1 = { 0, 0, 400, 15};
+	drawtext("操作说明：左移：A键  右移：D键  上移：W键  下移：S键", &S1, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	RECT R8 = { 90, 90, 250, 250 };
+	drawtext("按p返回", &R8, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	char key = _getch();
+	switch (key)
+	{
+	case 'p':
+	case 'P':
+			o1();
+			break;
+	}
+}
+enum Color//枚举格子颜色
+{
+	zero = RGB(205, 193, 180),
+	two1 = RGB(238, 228, 218),
+	two2 = RGB(237, 224, 200),
+	two3 = RGB(242, 177, 121),
+	two4 = RGB(245, 149, 99),
+	two5 = RGB(246, 124, 95),
+	two6 = RGB(246, 94, 59),
+	two7 = RGB(242, 177, 121),
+	two8 = RGB(237, 204, 97),
+	two9 = RGB(255, 0, 128),
+	two10 = RGB(145, 0, 72),
+	two11 = RGB(242, 17, 158),
+	back = RGB(187, 173, 160),
+
+};
+Color arr[13] = { zero, two1, two2, two3, two4, two5, two6, two7, two8, two9, two10, two11, back };
+int num[12] = { 0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048 };
+int map[MAX_GRID][MAX_GRID];
+POINT pos[MAX_GRID][MAX_GRID];
+bool flag = false;
+int twoOrFour()
+{
+	if (rand() % 10 == 1)
+	{
+		return 4;
+	}
+	else
+	{
+		return 2;
+	}
+}
+void CreateNumber()
+{
+	while (1)
+	{
+		int x = rand() % MAX_GRID;
+		int y = rand() % MAX_GRID;
+		if (map[x][y] == 0)
+		{
+			map[x][y] = twoOrFour();
+			break;
+		}
+	}
+
+}
+void GameInit()
+{
+	srand(GetTickCount());
+	//计算格子坐标
+	for (int i = 0; i < MAX_GRID; i++)
+	{
+		for (int k = 0; k < MAX_GRID; k++)
+		{
+			pos[i][k].x = k*GRID_WIDTH + (k + 1)*INTERVAL;
+			pos[i][k].y = i*GRID_WIDTH + (i + 1)*INTERVAL;
+		}
+	}
+	CreateNumber();
+	CreateNumber();
+}
+void GameDraw()
+{
+	for (int i = 0; i < MAX_GRID; i++)
+	{
+		for (int k = 0; k < MAX_GRID; k++)
+		{
+			for (int q = 0; q < 12; q++)
+			{
+				if (map[i][k] == num[q])
+				{
+					setfillcolor(arr[q]);
+					solidrectangle(pos[i][k].x, pos[i][k].y, pos[i][k].x + GRID_WIDTH, pos[i][k].y + GRID_WIDTH);
+					if (map[i][k] != 0)
+					{
+						char number[5] = " ";
+						settextcolor(RGB(119, 110, 101));
+						settextstyle(50, 0, "楷体");
+						setbkmode(TRANSPARENT);
+						sprintf(number, "%d", map[i][k]);
+						int tempx = GRID_WIDTH / 2 - textwidth(number) / 2;
+						int tempy = GRID_WIDTH / 2 - textheight(number) / 2;
+						outtextxy(pos[i][k].x + tempx, pos[i][k].y + tempy, number);
+					}
+				}
+			}
+		}
+	}
+}
+//键盘控制
+void moveup()
+{
+	int temp = 0;
+	for (int i = 0; i < MAX_GRID; i++)
+	{
+		int temp = 0;
+		for (int begin = 1; begin < MAX_GRID; begin++)
+		{
+			if (map[begin][i] != 0)
+			{
+				if (map[temp][i] == 0)
+				{
+					map[temp][i] = map[begin][i];
+					map[begin][i] = 0;
+				}
+				else if (map[temp][i] == map[begin][i])
+				{
+					map[temp][i] += map[begin][i];
+					map[begin][i] = 0;
+				}
+				else
+				{
+					map[temp + 1][i] = map[begin][i];
+					if (temp + 1 != begin)
+					{
+						map[begin][i] = 0;
+					}
+				}
+				temp++;
+				flag = true;
+			}
+		}
+	}
+}
+void movedown()
+{
+	int temp = MAX_GRID - 1;
+	for (int i = 0; i < MAX_GRID; i++)
+	{
+		int temp = MAX_GRID - 1;
+		for (int begin = MAX_GRID - 2; begin >= 0; begin--)
+		{
+			if (map[begin][i] != 0)
+			{
+				if (map[temp][i] == 0)
+				{
+					map[temp][i] = map[begin][i];
+					map[begin][i] = 0;
+				}
+				else if (map[temp][i] == map[begin][i])
+				{
+					map[temp][i] += map[begin][i];
+					map[begin][i] = 0;
+				}
+				else
+				{
+					map[temp - 1][i] = map[begin][i];
+					if (temp - 1 != begin)
+					{
+						map[begin][i] = 0;
+					}
+				}
+				temp--;
+				flag = true;
+			}
+		}
+	}
+}
+void moveleft()
+{
+	int temp = 0;
+	for (int i = 0; i < MAX_GRID; i++)
+	{
+		int temp = 0;
+		for (int begin = 1; begin < MAX_GRID; begin++)
+		{
+			if (map[i][begin] != 0)
+			{
+				if (map[i][temp] == 0)
+				{
+					map[i][temp] = map[i][begin];
+					map[i][begin] = 0;
+				}
+				else if (map[i][temp] == map[i][begin])
+				{
+					map[i][temp] += map[i][begin];
+					map[i][begin] = 0;
+				}
+				else
+				{
+					map[i][temp + 1] = map[i][begin];
+					if (temp + 1 != begin)
+					{
+						map[i][begin] = 0;
+					}
+				}
+				temp++;
+				flag = true;
+			}
+		}
+	}
+}
+void moveright()
+{
+	int temp = MAX_GRID - 1;
+	for (int i = 0; i < MAX_GRID; i++)
+	{
+		int temp = MAX_GRID - 1;
+		for (int begin = MAX_GRID - 2; begin >= 0; begin--)
+		{
+			if (map[i][begin] != 0)
+			{
+				if (map[i][temp] == 0)
+				{
+					map[i][temp] = map[i][begin];
+					map[i][begin] = 0;
+				}
+				else if (map[i][temp] == map[i][begin])
+				{
+					map[i][temp] += map[i][begin];
+					map[i][begin] = 0;
+				}
+				else
+				{
+					map[i][temp - 1] = map[i][begin];
+					if (temp - 1 != begin)
+					{
+						map[i][begin] = 0;
+					}
+				}
+				temp--;
+				flag = true;
+			}
+		}
+	}
+}
+void GameJudge()
+{
+	if (flag)
+	{
+		CreateNumber();
+		flag = false;
+	}
+}
+void GameContorl()
+{
+	char key = _getch();
+	switch (key)
+	{
+	case'w':
+	case'W':
+	case72 :
+		moveup();
+		   break;
+	case's':
+	case'S':
+	case80 :
+		movedown();
+		   break;
+	case'a':
+	case'A':
+	case75 :
+		moveleft();
+		   break;
+	case'd':
+	case'D':
+	case77 :
+		moveright();
+		   break;
+	}
+}
+void start()
+{
+	initgraph(MAX_GRID*GRID_WIDTH + 5 * INTERVAL, MAX_GRID*GRID_WIDTH + 5 * INTERVAL);//背景大小475,475
+	setbkcolor(RGB(187, 173, 160));//背景颜色
+	cleardevice();
+	GameInit();
+	while (1)
+	{
+		GameDraw();
+		GameContorl();
+		GameJudge();
+    }
+}
+
+
+int main()
+{
+	lead();
+	return 0;
+}
