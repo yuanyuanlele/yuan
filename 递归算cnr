@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+int fnc(int n)
+{
+	int s=1;
+	if(n==1)
+	return 1;
+	else
+	return n*fnc(n-1);
+}
+int main(int argc, char *argv[]) 
+{
+	int n,r,x,cnr;
+	do
+	{
+	printf("输入n和r\n");
+	scanf("%d%d",&n,&r);
+	if(n==0&&r==0)
+	{
+		exit(1);
+	}
+	x=n-r;
+	cnr=fnc(n)/(fnc(r)*fnc(x));
+	printf("C(%d,%d)=%d\n",n,r,cnr);
+    }
+    while(n>0&&n>=r);
+    return 0;
+}
