@@ -26,6 +26,6 @@ int main(int argc, char *argv[])
 	cnr=fnc(n)/(fnc(r)*fnc(x));
 	printf("C(%d,%d)=%d\n",n,r,cnr);
     }
-    while(n>0&&n>=r);
+    while(r>0&&n>=r);
     return 0;
 }
