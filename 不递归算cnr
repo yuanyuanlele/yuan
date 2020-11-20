@@ -1,0 +1,39 @@
+#include <stdio.h>
+int main()
+{
+	int q,w;
+	do
+	{
+		int n,r,x,cnr;
+		printf("请输入n，r\n");
+		scanf("%d,%d\n",&n,&r);
+		fflush(stdin); 
+		q=n,w=r;
+		int a=1,b=1,c=1;
+		for(n;n>=2;n--)
+		{
+			a=a*n;
+		}
+		for(r;r>=2;r--)
+		{
+			b=b*r;
+		}
+		x=n-r;
+		for(x;x>=2;x--)
+		{
+			c=c*x;
+		}
+		cnr=a/(b*c);
+		if(w>q)
+		{
+			printf("不可取\n");
+			break;
+		}
+		if(w==0&&q==0)
+		{
+			break;	
+		}
+		printf("C(%d,%d)=%d\n",q,w,cnr);
+	}	while(w>0,q>=w);
+	return 0;
+}
