@@ -1,0 +1,26 @@
+#include<iostream>
+#include<stdio.h>
+using namespace std;
+int main()
+{
+	int n,m;
+	int a,b;
+	while(1)
+	{
+		scanf("%d %d",&n,&m);
+	    b=(m-2*n)/2;
+	    a=(4*n-m)/2;
+	    if(m==0&&n==0)
+	    {
+	    	break;
+		}
+		if(m>4*n||m<2*n||m%2==1)
+		{
+			printf("Error\n");
+		}
+		else
+	    printf("%d %d\n",a,b);
+	}
+	
+	
+} 
