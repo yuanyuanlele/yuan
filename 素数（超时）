@@ -1,0 +1,39 @@
+#include<iostream>
+using namespace std;
+int sushu(int n)
+{
+	int j; 
+	int i;
+	int d=1;
+	int e=0;
+	for(j=1;j<=n;j++)
+	{
+	 d=1;
+	 if(j==1)
+	 continue;
+	 if(j==2)
+	 e++;
+	 else
+	 {
+	 for(i=2;i<j;i++)
+	 { 
+	 	 if(j%i==0)
+	 	 {
+	 	 d=0;
+	 	 break;
+	     }
+	 }
+	 if(d==1)
+	 e++;
+     }
+    }
+    return e;
+} 
+int main()
+{
+	int n;
+	while(cin>>n&&n)
+	{
+		cout<<sushu(n)<<endl;
+	}
+} 
