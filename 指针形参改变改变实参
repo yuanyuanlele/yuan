@@ -1,0 +1,16 @@
+#include<iostream>
+using namespace std;
+void change(int *p,int *m)
+{
+	int c=*p;
+	*p=*m;
+	*m=c;
+ } 
+int main()
+{
+	int a=0;
+	int b=1;
+	change(&a,&b);
+	cout<<a<<" "<<b<<endl;
+	return 0;
+}
