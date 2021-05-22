@@ -1,0 +1,160 @@
+#include<iostream>
+using namespace std; 
+class MyDate
+{
+public:
+	int year;
+	int month;
+	int day;
+	MyDate()
+	{
+		year = 0;
+		month = 0;
+		day = 0;
+	}
+	MyDate(int year1, int month1, int day1)
+	{
+		this->year = year1;
+		this->month = month1;
+		this->day = day1;
+	}
+	float diffYear()
+	{ 
+    return (2010-this->year-this->month/12.0)*12;
+	}
+};
+class Person
+{
+    public:
+    string name;
+	string id;
+	string phonenumber;
+	Person(string name1,string id1,string phonenumber1)
+	{
+		name = name1;
+		phonenumber = phonenumber1;
+		id=id1; 
+	}
+	void setname(string name)
+	{
+		this->name = name;
+	}
+	void setnumber(int number)
+	{
+		this->phonenumber = number;
+	}
+	void setid(string id)
+	{
+		this->id=id;
+	}
+    void print()
+	{
+		cout<<this->name<<endl;
+		cout<<this->id<<endl;
+		cout<<this->phonenumber<<endl;
+	}
+};
+class Student :public Person
+{
+    public:
+	const string grade;
+	Student(string name1,string id1,string phonenumber1,string grade1):Person(name1,id1,phonenumber1),grade(grade1)
+	{
+	}
+	void print()
+	{
+		cout<<this->name<<endl;
+		cout<<this->id<<endl;
+		cout<<this->phonenumber<<endl;
+		cout<<this->grade<<endl;
+	}
+};
+
+class Employee:public Person
+{
+    public:
+    string office;
+	double salary; 
+	MyDate dateHired;
+	Employee(string name1,string id1,string phonenumber1,string office1):Person(name1,id1,phonenumber1)
+	{
+	}
+	void setoffice(string office)
+	{
+		this->office = office;
+	}
+	void setsalary(double salary)
+	{
+		this->salary = salary;
+	}
+	void setdatehired(MyDate datehired)
+	{
+		this->dateHired = datehired;
+	}
+	void print()
+	{
+		cout<<this->name<<endl;
+		cout<<this->id<<endl;
+		cout<<this->phonenumber<<endl;
+	}
+};
+class Faculty :public Employee
+{
+    public:
+    const int basicwages=6000;
+	int rank;
+	Faculty(string name,string id,string phonenumber,string office,MyDate &a,int rank):Employee(name,id,phonenumber,office)
+	{
+		rank=rank;
+		dateHired=a;
+	}
+	float salary(){ return basicwages*rank;}
+	void print()
+	{
+		cout<<this->name<<endl;
+		cout<<this->id<<endl;
+		cout<<this->phonenumber<<endl;
+		cout<<this->salary()<<endl;
+		cout<<this->dateHired.year<<"年"<<this->dateHired.month<<"月"<<this->dateHired.day<<"号"<<endl;
+	}
+};
+
+class Staff :public Employee
+{
+    public:
+	string position;
+	const int basicwages=6000;
+	const int allowance=500;
+	Staff(string name,string id,string phonenumber,string office,MyDate &a,string position):Employee(name,id,phonenumber,office)
+	{
+		position=position;
+		dateHired=a; 
+	}
+	float salary(){ return basicwages+allowance*(2010-this->dateHired.year);}
+	void print()
+	{
+		cout<<this->name<<endl;
+		cout<<this->id<<endl;
+		cout<<this->phonenumber<<endl; 
+		cout<<this->salary()<<endl;
+		cout<<this->dateHired.year<<"年"<<this->dateHired.month<<"月"<<this->dateHired.day<<"号"<<endl;
+		cout<<this->allowance<<endl;
+		cout<<this->basicwages<<endl;
+	}
+};
+int main()
+{
+	Person person("one","001","123456");
+    person.print();
+    Student student("two","002","123457","Freshman");
+    student.print();
+    Employee employee("three","003","123458","99Office");
+    employee.print();
+    MyDate time1(2002,6,17);
+    Faculty faculty("four","004","123459","991ffice",time1,3);
+    faculty.print();
+    MyDate time2(2003,5,7);
+    Staff staff("five","005","123460","992ffice",time2,"manager");
+    staff.print();
+	return 0;
+}
