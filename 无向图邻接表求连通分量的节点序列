@@ -1,0 +1,133 @@
+//最后输出连通分量后原表就被破坏了，原因是我无法在bqs里正确使用EdgeNode类型的e，指针还是太难了
+#include <stdlib.h>
+#include <stdio.h>
+#define MAXVEX 10
+int visit[100];
+/* Status是函数的类型,其值是函数结果状态代码，如OK等 */
+typedef int Status;
+/* 顶点类型应由用户定义  */
+typedef char VertexType;
+/* 边上的权值类型应由用户定义 */
+typedef int EdgeType;
+
+typedef struct EdgeNode {
+	// 邻接点域,存储该顶点对应的下标
+	int adjvex;
+	// 链域,指向下一个邻接点
+	struct EdgeNode* next;
+} EdgeNode;
+
+// 顶点表结点
+typedef struct VertexNode {
+	// 顶点域,存储顶点信息
+	VertexType data;
+	// 边表头指针
+	EdgeNode* firstedge;
+} VertexNode, AdjList[MAXVEX];
+
+typedef struct {
+	AdjList adjList;
+	// 图中当前顶点数和边数
+	int numNodes;
+	int numEdges;
+} GraphAdjList, * GraphList;
+void CreateMyGraph(GraphList* plus);
+void dfs(GraphList a,int v,int m);
+int main(void) {
+	int i, j;
+	GraphList plus;
+	CreateMyGraph(&plus);
+	for (i = 0; i < plus->numNodes; i++) {
+		printf("%c:\t", plus->adjList[i].data);
+		EdgeNode* e;
+		e = plus->adjList[i].firstedge;
+		while (e != NULL) {
+			printf("%c\t", plus->adjList[e->adjvex].data);
+			e = e->next;
+		}
+		free(e);
+		printf("\n");
+	}
+	dfs(plus,0,1);	
+	for(int a=0;a<i;a++)
+	{
+		if(visit[a]==0){
+		dfs(plus,a,2);
+		break;}
+	}
+	for(int a=0;a<i;a++)
+	{
+		if(visit[a]==0){
+		dfs(plus,a,3);
+		break;}
+	}
+	for(int a=0;a<i;a++)
+	{
+		if(visit[a]==1)
+		printf("%c",plus->adjList[a].data);
+	}
+	printf("\n");
+	for(int a=0;a<i;a++)
+	{
+		if(visit[a]==2)
+		printf("%c",plus->adjList[a].data);
+	}
+	printf("\n");
+	for(int a=0;a<i;a++)
+	{
+		if(visit[a]==3)
+		printf("%c",plus->adjList[a].data);
+	}
+	printf("\n");
+}
+void CreateMyGraph(GraphList* plus) {
+	int i, j, k, w;
+	EdgeNode* e;
+	printf("请输入顶点数和边数:\n");
+	scanf("%d %d", &i,&j);
+	*plus = (GraphList)malloc(sizeof(GraphAdjList));
+	getchar();
+	(*plus)->numNodes = i;
+	(*plus)->numEdges = j;
+	// 读入顶点数
+	for (i = 0; i < (*plus)->numNodes; i++) {
+		// 输入顶点信息
+		scanf("%c", &(*plus)->adjList[i].data);
+		// 将边表置为空表
+		(*plus)->adjList[i].firstedge = NULL;
+	}
+	// 读入numEdges条边，建立邻接矩阵
+	for (k = 0; k < (*plus)->numEdges; k++) {
+		printf("输入边(vi,vj)上的下标i,下标j:\n");
+		scanf("%d", &i);
+		scanf("%d", &j);
+		// 向内存申请空间,生成边表结点
+		e = (EdgeNode*)malloc(sizeof(EdgeNode));
+		// 邻接序号为j
+		e->adjvex = j;
+		// 将e的指针指向当前顶点上指向的结点
+		e->next = (*plus)->adjList[i].firstedge;
+		// 将当前顶点的指针指向e
+		(*plus)->adjList[i].firstedge = e;
+		// 因为是无向图，所以需对称存储
+		// 向内存申请空间,生成边表结点
+		e = (EdgeNode*)malloc(sizeof(EdgeNode));
+		// 邻接序号为i
+		e->adjvex = i;
+		// 将e的指针指向当前顶点上指向的结点
+		e->next = (*plus)->adjList[j].firstedge;
+		// 将当前顶点的指针指向e
+		(*plus)->adjList[j].firstedge = e;
+	}
+}
+EdgeNode* s;
+void dfs(GraphList a,int v,int m)
+{
+	visit[v]=m;
+	while(a->adjList[v].firstedge!=NULL)
+	{
+		if(!visit[a->adjList[v].firstedge->adjvex])
+		dfs(a,a->adjList[v].firstedge->adjvex,m);
+		a->adjList[v].firstedge=a->adjList[v].firstedge->next;
+	}	        
+}
